@@ -1,0 +1,8 @@
+statsforecast
+statsmodels
+torchtext
+nltk
+gluonts
+pytorch_lightning
+sentence_transformers
+chronos-forecasting==2.0.0

@@ -15,6 +15,11 @@ We provide two libraries for the broader community to customize their language m
 3. Install tinker python client via `pip install tinker`
 4. We recommend installing `tinker-cookbook` in a virtual env either with `conda` or `uv`. For running most examples, you can install via `pip install -e .`.
 
+#### Additional steps for time series forecasting
+
+5. Install time series forecasting related packages: `pip install -r requirements-ts.txt`
+6. Go to the verl folder and `pip install -e .`
+
 ## Tinker
 
 Refer to the [docs](https://tinker-docs.thinkingmachines.ai/training-sampling) to start from basics.

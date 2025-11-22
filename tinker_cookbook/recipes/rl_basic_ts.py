@@ -3,16 +3,18 @@ import asyncio
 import chz
 import sys
 from tinker_cookbook import cli_utils, model_info
-from tinker_cookbook.recipes.math_rl.math_env import Gsm8kDatasetBuilder
+from tinker_cookbook.recipes.mmts_builder import MMTSBuilder
 from tinker_cookbook.rl import train
 
 
 def build_config_blueprint() -> chz.Blueprint[train.Config]:
-    model_name = "meta-llama/Llama-3.1-8B"
+    model_name = "Qwen/Qwen3-32B"
     renderer_name = model_info.get_recommended_renderer_name(model_name)
-    builder = Gsm8kDatasetBuilder(
-        batch_size=128,
-        group_size=16,
+    builder = MMTSBuilder(
+        train_parquet_path="/fsx/chronos-o1/dataset/parquet/train_0028.parquet",
+        eval_parquet_path="/fsx/chronos-o1/dataset/parquet/eval_0028.parquet",
+        batch_size=32,
+        group_size=8,
         renderer_name=renderer_name,
         model_name_for_tokenizer=model_name,
     )
@@ -20,13 +22,14 @@ def build_config_blueprint() -> chz.Blueprint[train.Config]:
     return chz.Blueprint(train.Config).apply(
         {
             "model_name": model_name,
-            "log_path": "/tmp/tinker-examples/rl_basic",
+            "log_path": "/tmp/tinker-examples/rl_basic_ts",
             "dataset_builder": builder,
             "learning_rate": 4e-5,
-            "max_tokens": 256,
-            "eval_every": 0,
+            "max_tokens": 8092,
+            "save_every": 1,
+            "eval_every": 1,
             "wandb_project": "tinker",
-            "wandb_name": "gsm8k"
+            "wandb_name": "mmts"
         }
     )
 
