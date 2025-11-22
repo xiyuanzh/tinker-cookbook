@@ -1,20 +1,15 @@
 import tinker
-import requests
+import urllib.request
+ 
+sc = tinker.ServiceClient()
+rc = sc.create_rest_client()
+future = rc.get_checkpoint_archive_url_from_tinker_path("tinker://9a511290-aa5e-5879-b111-5a76dfb2d179:train:0/sampler_weights/000001")
+checkpoint_archive_url_response = future.result()
+ 
+# `checkpoint_archive_url_response.url` is a signed URL that can be downloaded
+# until checkpoint_archive_url_response.expires
+urllib.request.urlretrieve(checkpoint_archive_url_response.url, "archive.tar")
 
-# Create service client
-service_client = tinker.ServiceClient()
-rest_client = service_client.create_rest_client()
-
-# Get model path from your training logs or wandb
-model_path = "3a6a95f1-0804-5c83-a156-b272e36f088b:train:0"
-
-# Download checkpoint
-url = rest_client.get_checkpoint_archive_url_from_tinker_path(model_path)
-print(f"Download URL: {url}")
-
-# Use the URL to download manually or with requests
-import requests
-response = requests.get(url)
-with open("model-checkpoint.tar.gz", "wb") as f:
-    f.write(response.content)
-print("Checkpoint downloaded successfully!")
+import tarfile
+with tarfile.open("archive.tar", "r") as tar:
+    tar.extractall("archive")

@@ -22,12 +22,12 @@ def build_config_blueprint() -> chz.Blueprint[train.Config]:
     return chz.Blueprint(train.Config).apply(
         {
             "model_name": model_name,
-            "log_path": "/tmp/tinker-examples/rl_basic_ts",
+            "log_path": "/tmp/tinker-examples/rl_basic_ts_2",
             "dataset_builder": builder,
             "learning_rate": 4e-5,
             "max_tokens": 8092,
             "save_every": 1,
-            "eval_every": 1,
+            "eval_every": 0,
             "wandb_project": "tinker",
             "wandb_name": "mmts"
         }

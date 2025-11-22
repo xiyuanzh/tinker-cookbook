@@ -21,7 +21,7 @@ from tinker_cookbook.tokenizer_utils import get_tokenizer
 import tinker
 
 _global_code_counter = 0
-root_folder = "/tmp/tinker-examples/rl_basic_ts/"
+root_folder = "/tmp/tinker-examples/rl_basic_ts_2/"
 
 
 def _log_error(code_id: int, error_msg: str, stderr: str):
